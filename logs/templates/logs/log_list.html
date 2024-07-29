@@ -1,0 +1,98 @@
+{% load static %}
+<!-- logs/templates/logs/log_list.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Logs</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>Logs</h1>
+        <form id="filter-form" class="form-row mb-4" action="{% url 'log_list' %}" method="get">
+            <div class="form-group col-md-3">
+                <label for="search-query">Search:</label>
+                <input type="text" id="search-query" name="q" value="{{ query }}" class="form-control" placeholder="Search logs...">
+            </div>
+            <div class="form-group col-md-2">
+                <label for="sort">Sort By:</label>
+                <select id="sort" name="sort" class="form-control custom-select">
+                    <option value="newest" {% if sort == 'newest' %}selected{% endif %}>Newest</option>
+                    <option value="oldest" {% if sort == 'oldest' %}selected{% endif %}>Oldest</option>
+                </select>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="per-page">Logs Per Page:</label>
+                <select id="per-page" name="per_page" class="form-control custom-select">
+                    <option value="10" {% if per_page == '10' %}selected{% endif %}>10</option>
+                    <option value="20" {% if per_page == '20' %}selected{% endif %}>20</option>
+                    <option value="50" {% if per_page == '50' %}selected{% endif %}>50</option>
+                </select>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="message-type">Message Type:</label>
+                <select id="message-type" name="message_type" class="form-control custom-select">
+                    <option value="all" {% if message_type == 'all' %}selected{% endif %}>All</option>
+                    <option value="info" {% if message_type == 'info' %}selected{% endif %}>Information</option>
+                    <option value="warning" {% if message_type == 'warning' %}selected{% endif %}>Warning</option>
+                    <option value="error" {% if message_type == 'error' %}selected{% endif %}>Error</option>
+                </select>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="source">Source:</label>
+                <select id="source" name="source" class="form-control custom-select">
+                    <option value="all" {% if source == 'all' %}selected{% endif %}>All</option>
+                    <option value="system" {% if source == 'system' %}selected{% endif %}>System</option>
+                    <option value="user" {% if source == 'user' %}selected{% endif %}>User</option>
+                    <option value="network" {% if source == 'network' %}selected{% endif %}>Network</option>
+                </select>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="date-from">Date From:</label>
+                <input type="date" id="date-from" name="date_from" value="{{ date_from }}" class="form-control">
+            </div>
+            <div class="form-group col-md-2">
+                <label for="date-to">Date To:</label>
+                <input type="date" id="date-to" name="date_to" value="{{ date_to }}" class="form-control">
+            </div>
+            <div class="form-group col-md-12 text-right mt-2">
+                <button type="submit" class="btn btn-primary">Apply</button>
+            </div>
+        </form>    
+
+        <form id="export-form" class="mb-4 text-right" action="{% url 'export_logs' %}" method="get">
+            <input type="hidden" name="q" value="{{ query }}">
+            <input type="hidden" name="sort" value="{{ sort }}">
+            <input type="hidden" name="per_page" value="{{ per_page }}">
+            <input type="hidden" name="message_type" value="{{ message_type }}">
+            <input type="hidden" name="source" value="{{ source }}">
+            <input type="hidden" name="date_from" value="{{ date_from }}">
+            <input type="hidden" name="date_to" value="{{ date_to }}">
+            <div class="form-row align-items-center">
+                <div class="col-auto">
+                    <label for="export-format">Export Format:</label>
+                    <select id="export-format" name="format" class="form-control custom-select">
+                        <option value="csv">CSV</option>
+                        <option value="txt">TXT</option>
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-secondary mt-3">Download Logs</button>
+                </div>
+            </div>
+        </form>
+
+        <button id="toggle-theme" class="btn btn-secondary mb-4">Toggle Theme</button>
+
+        <div id="logs-container">
+            {% include 'logs/log_list_content.html' %}
+        </div>
+    </div>
+    <script src="{% static 'js/scripts.js' %}"></script>
+</body>
+</html>

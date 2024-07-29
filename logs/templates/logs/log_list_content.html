@@ -1,0 +1,52 @@
+<!-- logs/templates/logs/log_list_content.html -->
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Message</th>
+            <th>Type</th>
+            <th>Source</th>
+            <th>Created At</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for log in page_obj.object_list %}
+            <tr>
+                <td class="log-message">{{ log.message|safe }}</td>
+                <td class="log-type">
+                    {% if log.message_type == 'info' %}
+                        <i class="fas fa-info-circle log-icon info-icon" title="Information"></i>
+                    {% elif log.message_type == 'warning' %}
+                        <i class="fas fa-exclamation-triangle log-icon warning-icon" title="Warning"></i>
+                    {% elif log.message_type == 'error' %}
+                        <i class="fas fa-times-circle log-icon error-icon" title="Error"></i>
+                    {% else %}
+                        <i class="fas fa-question-circle log-icon unknown-icon" title="Unknown"></i>
+                    {% endif %}
+                </td>
+                <td>{{ log.get_source_display }}</td>
+                <td>{{ log.created_at }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}&q={{ query }}&sort={{ sort }}&per_page={{ per_page }}&message_type={{ message_type }}&source={{ source }}&date_from={{ date_from }}&date_to={{ date_to }}">Previous</a>
+            </li>
+        {% endif %}
+        {% for num in page_obj.paginator.page_range %}
+            <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                <a class="page-link" href="?page={{ num }}&q={{ query }}&sort={{ sort }}&per_page={{ per_page }}&message_type={{ message_type }}&source={{ source }}&date_from={{ date_from }}&date_to={{ date_to }}">{{ num }}</a>
+            </li>
+        {% endfor %}
+        {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}&q={{ query }}&sort={{ sort }}&per_page={{ per_page }}&message_type={{ message_type }}&source={{ source }}&date_from={{ date_from }}&date_to={{ date_to }}">Next</a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>

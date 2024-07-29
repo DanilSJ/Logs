@@ -1,0 +1,71 @@
+/* dark.css */
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    color: #e0e0e0;
+}
+
+.table {
+    background-color: #1e1e1e; /* Темный фон для таблицы */
+    color: #e0e0e0; /* Светлый текст в таблице */
+    border: 1px solid #333; /* Темные границы таблицы */
+}
+
+.table th, .table td {
+    border-color: #333; /* Темные границы ячеек */
+    padding: 10px;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #2c2c2c; /* Немного светлее фон для нечетных строк */
+}
+
+.table-striped tbody tr:nth-of-type(even) {
+    background-color: #1e1e1e; /* Черный фон для четных строк */
+}
+
+.log-type i {
+    color: #e0e0e0; /* Цвет иконок в таблице */
+}
+
+.pagination {
+    background-color: #121212; /* Фон пагинации */
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.pagination .page-item {
+    margin: 0 5px;
+}
+
+.pagination .page-link {
+    color: #e0e0e0; /* Цвет ссылок пагинации */
+    background-color: #333; /* Фон ссылок пагинации */
+    border: 1px solid #444; /* Граница ссылок */
+    text-decoration: none;
+    padding: 5px 10px;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #555; /* Цвет фона активной страницы */
+    color: #e0e0e0; /* Цвет текста активной страницы */
+    border-radius: 4px;
+}
+
+.pagination .page-link:hover {
+    background-color: #444; /* Цвет фона при наведении */
+    color: #e0e0e0; /* Цвет текста при наведении */
+}
+
+.btn-secondary {
+    background-color: #444; /* Темный фон кнопки переключения темы */
+    color: #e0e0e0; /* Светлый текст на кнопке */
+}
+
+.btn-secondary:hover {
+    background-color: #555; /* Более светлый фон при наведении */
+}
